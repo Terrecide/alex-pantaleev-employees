@@ -1,0 +1,18 @@
+<table id="table" *ngIf='endResults'>
+    <thead>
+      <tr>
+        <th>EmployeeID#1</th>
+        <th>EmployeeID#2</th>
+        <th>ProjectIDs</th>
+        <th>Days worked</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let result of endResults'>
+        <td>{{ result.employeeID1 }}</td>
+        <td>{{ result.employeeID2 }}</td>
+        <td>{{ result.projects }}</td>
+        <td>{{ result.daysWorkedTogether }}</td>
+      </tr>
+    </tbody>
+</table>

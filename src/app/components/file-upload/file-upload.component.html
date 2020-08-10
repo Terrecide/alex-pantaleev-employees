@@ -1,0 +1,7 @@
+<div class="container">
+    <div class="button-wrap">
+        <label class="button" for="upload">Upload File</label>
+        <input type="file" name="File Upload" id="upload" (change)="fileChangeListener($event)" accept=".txt, .csv" />
+    </div>
+</div>
+<div id="error" *ngIf='error' >{{ error }}</div>    
