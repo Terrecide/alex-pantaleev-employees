@@ -15,6 +15,7 @@ export class DataService {
 
   private parsedData: EmployeeProjectData[] = [];
   private pairsArray: EmployeePair[] = [];
+  dateFormats = ["YYYY-MM-DD", "DD-MM-YYYY", "YYYY/MM/DD", "DD/MM/YYYY"];
 
   calculateEndResult(data: any) {
     this.parsedData = this.parseData(data);
@@ -27,14 +28,14 @@ export class DataService {
     let parsedData = data.split('\n').map(record => {
       record = record.split(', ');
       if(record[3].indexOf('NULL') > -1) {
-        record[3] = moment().format("YYYY-MM-DD")
+        record[3] = moment()
       }
 
       return {
         employeeID: +record[0],
         projectID: +record[1],
-        dateFrom: moment(record[2], "YYYY-MM-DD"),
-        dateTo: moment(record[3], "YYYY-MM-DD"),
+        dateFrom: moment(record[2], this.dateFormats),
+        dateTo: moment(record[3], this.dateFormats),
       }
     });
 
