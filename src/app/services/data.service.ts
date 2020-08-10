@@ -73,14 +73,9 @@ export class DataService {
     })
 
     if(this.pairsArray.length > 0) {
-      // Leave out only the pair with the most days worked
-      this.pairsArray.reduce(function (prev, current) {
-          if (current.daysWorkedTogether > prev.daysWorkedTogether) {
-              return current;
-          } else {
-              return prev;
-          }
-      }); 
+      // Leave out only the pair/s with the most days worked
+      const maxNumberOfDays = Math.max(...this.pairsArray.map(pair => pair.daysWorkedTogether), 0);
+      this.pairsArray = this.pairsArray.filter(pair => pair.daysWorkedTogether == maxNumberOfDays);
 
       // Make projectsID's array for display
       this.pairsArray.forEach(pair => {
