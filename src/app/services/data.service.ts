@@ -15,7 +15,6 @@ export class DataService {
 
   private parsedData: EmployeeProjectData[] = [];
   private pairsArray: EmployeePair[] = [];
-  dateFormats = ["YYYY-MM-DD", "DD-MM-YYYY", "YYYY/MM/DD", "DD/MM/YYYY"];
 
   calculateEndResult(data: any) {
     this.parsedData = this.parseData(data);
@@ -34,8 +33,8 @@ export class DataService {
       return {
         employeeID: +record[0],
         projectID: +record[1],
-        dateFrom: moment(record[2], this.dateFormats),
-        dateTo: moment(record[3], this.dateFormats),
+        dateFrom: moment(record[2]),
+        dateTo: moment(record[3]),
       }
     });
 
@@ -97,20 +96,9 @@ export class DataService {
   // calculates overlaping days in 2 periods based on different conditions
   calculateOverlapingDays (dateFrom1, dateTo1, dateFrom2, dateTo2) {
     if (dateTo1.isBefore(dateFrom2) || dateFrom1.isAfter(dateTo2)) return 0
-    else if (dateTo1.isBetween(dateFrom2, dateTo2, undefined, '[]') && dateFrom1.isBetween(dateFrom2, dateTo2, undefined, '[]')) return dateTo1.diff(dateFrom1, 'days')
-    else if(dateTo2.isBetween(dateFrom1, dateTo1, undefined, '[]') && dateFrom2.isBetween(dateFrom1, dateTo1, undefined, '[]')) return dateTo2.diff(dateFrom2, 'days')
-    else if (dateFrom1.isSameOrBefore(dateTo2) && dateTo1.isSameOrAfter(dateTo2)) {
-        if (dateTo2.diff(dateFrom1, 'days') === 0) {
-          return 1
-        } else {
-          return dateTo2.diff(dateFrom1, 'days')
-        }
-    } else if (dateTo1.isSameOrAfter(dateFrom2) && dateFrom1.isSameOrBefore(dateFrom2)) {
-        if (dateTo1.diff(dateFrom2, 'days') === 0) {
-          return 1
-        } else {
-          return dateTo1.diff(dateFrom2, 'days')
-        }
-    }
+    else if (dateTo1.isBetween(dateFrom2, dateTo2, undefined, '[]') && dateFrom1.isBetween(dateFrom2, dateTo2, undefined, '[]')) return dateTo1.diff(dateFrom1, 'days')+1
+    else if (dateTo2.isBetween(dateFrom1, dateTo1, undefined, '[]') && dateFrom2.isBetween(dateFrom1, dateTo1, undefined, '[]')) return dateTo2.diff(dateFrom2, 'days')+1
+    else if (dateFrom1.isSameOrBefore(dateTo2) && dateTo1.isSameOrAfter(dateTo2)) return dateTo2.diff(dateFrom1, 'days')+1
+    else if (dateTo1.isSameOrAfter(dateFrom2) && dateFrom1.isSameOrBefore(dateFrom2)) return dateTo1.diff(dateFrom2, 'days')+1
   }
 }
