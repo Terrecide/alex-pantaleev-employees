@@ -73,14 +73,16 @@ export class DataService {
     })
 
     if(this.pairsArray.length > 0) {
+      // Leave out only the pair with the most days worked
       this.pairsArray.reduce(function (prev, current) {
           if (current.daysWorkedTogether > prev.daysWorkedTogether) {
               return current;
           } else {
               return prev;
           }
-      });
+      }); 
 
+      // Make projectsID's array for display
       this.pairsArray.forEach(pair => {
         pair.projects = pair.calculatedPeriods.map(function (obj) {
           return obj.projectID;
